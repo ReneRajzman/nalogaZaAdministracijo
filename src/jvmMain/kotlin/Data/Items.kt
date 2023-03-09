@@ -90,7 +90,7 @@ class Items(val name: String) {
     fun NetoDDVBrutoString():String{
         val sb = StringBuilder()
 
-        sb.append("${String.format("%.2f€", returnTotal()-returnTaxTotal()).padEnd(10)}${String.format("%.2f€", returnTaxTotal()).padEnd(10)}${String.format("%.2f€", returnTotal()).padEnd(10)}\n")
+        sb.append("${String.format("%.2f€", returnTotal()-returnTaxTotal()).padEnd(10)}${String.format("%.2f€", returnTaxTotal()).padEnd(50)}${String.format("%.2f€", returnTotal()).padEnd(10)}\n")
 
         return sb.toString()
     }

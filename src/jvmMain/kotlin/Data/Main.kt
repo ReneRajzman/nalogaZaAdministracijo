@@ -12,7 +12,7 @@ fun main() = application {
         var hruska=Item("hruske", 2.33, 1.25, 3, 3.0)
         var lesniki=Item("lesniki", 4.50, 4.0, 3, 0.0)
         var slive=Item("slive", 3.00, 2.0, 3, 0.0)
-        var mleko=Item("mleko", 0.90, 7.0, 3, 5.0)
+        var mleko=Item("mleko", 0.90, 7.0, 2, 5.0)
 
         var nakupovalniList=Items("danes")
         nakupovalniList.addItem(jabolko)
