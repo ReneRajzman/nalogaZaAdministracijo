@@ -3,7 +3,7 @@ package Data
 import java.util.*
 
 
-class Items(val name: String) {
+class Items(val name: String):Searchable {
     val created: Date = Date()
     var modified: Date = Date()
 
@@ -99,6 +99,19 @@ class Items(val name: String) {
         val sb=StringBuilder()
         sb.append("${String.format("%.2f€", returnTotal()-returnTaxTotal()).padEnd(10)}${String.format("0.00€").padEnd(50)}${String.format("%.2f€", returnTotal()-returnTaxTotal()).padEnd(10)}\n")
         return sb.toString()
+    }
+
+    override fun search(word: String): Boolean {
+        var query=false
+        if(this.name.contains(word)){
+            query=true
+        }
+        for(item in itemsList){
+            if(item.search(word)){
+                query=true
+            }
+        }
+        return query
     }
 
     override fun toString(): String {

@@ -2,7 +2,7 @@ package Data
 
 import java.util.*
 
-class Invoice(val items: Items, val issuer: String, val cashier:String, val customer: Company?) {
+class Invoice(val items: Items, val issuer: String, val cashier:String, val customer: Company?):Searchable {
     val id: UUID
     val created: Date = Date()
     var modified: Date = Date()
@@ -23,6 +23,23 @@ class Invoice(val items: Items, val issuer: String, val cashier:String, val cust
     init {
         this.id = UUID.randomUUID()
         this.ean13 = generateEan13()
+    }
+
+    override fun search(word: String): Boolean {
+        var query=false
+        if(items.search(word)){
+            query=true
+        }
+        if(this.issuer.contains(word)){
+            query=true
+        }
+        if(this.cashier.contains(word)){
+            query=true
+        }
+        if(this.customer?.search(word) == true){
+            query=true
+        }
+        return query
     }
 
     override fun toString(): String {
@@ -52,14 +69,15 @@ class Invoice(val items: Items, val issuer: String, val cashier:String, val cust
             sb.append("${items.NetoDDVBrutoString()}\n")
         }
         else {
-            sb.append("ZNESEK ZA DAVČNEGA UPRAVIČENCA: ")
+            sb.append("ZNESEK ZA DAVČNEGA UPRAVIČENCA: \n")
             sb.append("${brutoPrint.padEnd(10)}${DDVPrint.padEnd(50)}${netoPrint.padEnd(10)}\n")
-
+            sb.append("${items.priceForTaxRelieved()}\n")
 
         }
         if(isCustomer){
-            sb.append("${customer.toString()}\n")
+            sb.append("${customer?.toString()}\n")
         }
+
         sb.append("___________________________________________________________________\n")
         sb.append("ZOI: $id")
 

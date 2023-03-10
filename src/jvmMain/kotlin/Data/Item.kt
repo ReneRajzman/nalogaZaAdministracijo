@@ -2,7 +2,7 @@ package Data
 
 import java.util.*
 
-data class Item(val name: String, var price: Double, var quantity: Double, val taxClass: Int, var discount: Double=0.0) {
+data class Item(val name: String, var price: Double, var quantity: Double, val taxClass: Int, var discount: Double=0.0):Searchable {
     val id: UUID
     val created: Date = Date()
     var modified: Date = Date()
@@ -78,7 +78,9 @@ data class Item(val name: String, var price: Double, var quantity: Double, val t
         modified = Date()
     }
 
-
+    override fun search(word: String): Boolean {
+        return this.name.contains(word)
+    }
 
     override fun toString(): String {
         return "${name.padEnd(10)}${quantity.toString().padEnd(20)}${String.format("%.2f€", price).padEnd(10)}${String.format("%.2f%%", discount).padEnd(10)}${String.format("%.2f€", getTotalPrice()).padEnd(10)}${String.format("%.2f%%", taxRate)}"

@@ -4,7 +4,6 @@ import androidx.compose.ui.window.application
 
 
 
-
 fun main() = application {
 
         var jabolko=Item("delises", 2.10, 1.10, 2, 5.0)
@@ -29,9 +28,13 @@ fun main() = application {
         nakupovalniList.modifyItem(jabolko,null,12.00,4.0)
         nakupovalniList.deleteItem(hruska)
 
-        val invoice=Invoice(items =nakupovalniList)
+        val valuna= Company("Valuna", 123, 567, "NE")
+
+        val invoice=Invoice(items =nakupovalniList, "Hofer", "Dora", valuna)
         println(invoice.toString())
 
+        println("\n\nProba search:\n")
+        println(invoice.search("Dora"))
 
 
 
