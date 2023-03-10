@@ -2,13 +2,12 @@ package Data
 
 import java.util.*
 
-class Invoice(val items: Items) {
+class Invoice(val items: Items, val issuer: String, val cashier:String, val customer: Company?) {
     val id: UUID
     val created: Date = Date()
     var modified: Date = Date()
     val ean13: String
 
-    val shop="SPAR"
     val adress="HIPERMARKET LENART, Industrijska ulica 49, 2230 Lenart"
     val heading="Naziv"
     val quantityPrint="Količina:KG/kom"
@@ -28,18 +27,39 @@ class Invoice(val items: Items) {
 
     override fun toString(): String {
         val sb = StringBuilder()
+        var paysTaxes=true
+        var isCustomer=false
 
-        sb.append("${shop}\n")
+        if(customer!=null) {
+            isCustomer=true
+            if (customer.taxpayer.toString() == "NE") {
+                paysTaxes = false
+            }
+        }
+
+        sb.append("${issuer}\n")
         sb.append("${adress}\n")
         sb.append("${created}\n")
         sb.append("EAN13: ${ean13}\n")
+        sb.append("Blagajnik: ${cashier}\n")
         sb.append("___________________________________________________________________\n")
         sb.append("${heading.padEnd(10)}${quantityPrint.padEnd(20)}${uPicePrint.padEnd(10)}${discount.padEnd(10)}${totalPrint.padEnd(10)}${taxPrint.padEnd(10)}\n")
         sb.append("___________________________________________________________________\n")
         sb.append(items.toString())
         sb.append("___________________________________________________________________\n\n")
-        sb.append("${brutoPrint.padEnd(10)}${DDVPrint.padEnd(50)}${netoPrint.padEnd(10)}\n")
-        sb.append("${items.NetoDDVBrutoString()}\n")
+        if(paysTaxes) {
+            sb.append("${brutoPrint.padEnd(10)}${DDVPrint.padEnd(50)}${netoPrint.padEnd(10)}\n")
+            sb.append("${items.NetoDDVBrutoString()}\n")
+        }
+        else {
+            sb.append("ZNESEK ZA DAVČNEGA UPRAVIČENCA: ")
+            sb.append("${brutoPrint.padEnd(10)}${DDVPrint.padEnd(50)}${netoPrint.padEnd(10)}\n")
+
+
+        }
+        if(isCustomer){
+            sb.append("${customer.toString()}\n")
+        }
         sb.append("___________________________________________________________________\n")
         sb.append("ZOI: $id")
 

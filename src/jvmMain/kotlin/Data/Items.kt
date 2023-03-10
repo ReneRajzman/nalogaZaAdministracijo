@@ -95,6 +95,12 @@ class Items(val name: String) {
         return sb.toString()
     }
 
+    fun priceForTaxRelieved():String{
+        val sb=StringBuilder()
+        sb.append("${String.format("%.2f€", returnTotal()-returnTaxTotal()).padEnd(10)}${String.format("0.00€").padEnd(50)}${String.format("%.2f€", returnTotal()-returnTaxTotal()).padEnd(10)}\n")
+        return sb.toString()
+    }
+
     override fun toString(): String {
         val sb = StringBuilder()
 
