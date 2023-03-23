@@ -89,7 +89,50 @@ def spremeni_kontrast(slika, alfa, beta):
 
 
 def main():
-    ##
+    # Create a VideoCapture object to capture images from the camera
+    cap = cv2.VideoCapture(0)
+
+    # Check if the camera was opened successfully
+    if not cap.isOpened():
+        print("Cannot open camera")
+        return
+
+    current_configuration = '5'  # Default configuration, change to '' for regular video
+    while True:
+        # Read an image from the camera
+        ret, frame = cap.read()
+
+        # Check if the image was read successfully
+        if not ret:
+            print("Cannot read camera frame")
+            return
+
+        # Convert the frame to grayscale
+        gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+        if current_configuration == '1':
+            printedFrame = my_roberts(gray_frame)
+        elif current_configuration == '2':
+            printedFrame = my_canny(gray_frame, 2, 20)
+        elif current_configuration == '3':
+            printedFrame = my_sobel(gray_frame)
+        elif current_configuration == '4':
+            printedFrame = my_prewitt(gray_frame)
+        elif current_configuration == '5':
+            printedFrame = spremeni_kontrast(frame, 5, 20)
+        else:
+            printedFrame = frame
+
+        # Display the chosen frame
+        cv2.imshow('frame', printedFrame)
+
+        key = cv2.waitKey(1)
+        if key == ord('q'):
+            break
+        elif key in [ord('1'), ord('2'), ord('3'), ord('4'), ord('5')]:
+            current_configuration = chr(key)
+        elif key == ord('0'):  # To reset to the regular video
+            current_configuration = ''
 
 if __name__ == '__main__':
     main()
