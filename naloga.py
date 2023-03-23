@@ -84,7 +84,7 @@ def my_canny(slika, sp_prag, zg_prag):
 
 
 def spremeni_kontrast(slika, alfa, beta):
-    ##
+    nova_slika = np.clip(alfa * slika + beta, 0, 255).astype('uint8')
     return nova_slika
 
 
