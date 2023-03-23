@@ -79,7 +79,7 @@ def my_sobel(slika):
 
 
 def my_canny(slika, sp_prag, zg_prag):
-    ##Trying to merge
+    slika_robov = cv2.Canny(slika, sp_prag, zg_prag)
     return slika_robov
 
 
