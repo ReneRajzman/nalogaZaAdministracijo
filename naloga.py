@@ -52,7 +52,27 @@ def my_prewitt(slika):
 
 
 def my_sobel(slika):
-    ##
+    height, width = slika.shape[:2]
+
+    # Create an empty grayscale image
+    slika_sobel = np.zeros((height, width), dtype=np.uint8)
+
+    # Define the Sobel kernels
+    kernel_x = np.array([[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]])
+    kernel_y = np.array([[1, 2, 1], [0, 0, 0], [-1, -2, -1]])
+
+    # Apply the Sobel filter
+    for y in range(1, height - 1):
+        for x in range(1, width - 1):
+            # Compute the gradients using the kernels
+            Gx = np.sum(kernel_x * slika[y - 1:y + 2, x - 1:x + 2])
+            Gy = np.sum(kernel_y * slika[y - 1:y + 2, x - 1:x + 2])
+
+            # Compute the magnitude of the gradient
+            magnitude = np.sqrt(Gx ** 2 + Gy ** 2)
+
+            slika_sobel[y, x] = np.clip(magnitude, 0, 255).astype('uint8')
+
 
     return slika_sobel
 
