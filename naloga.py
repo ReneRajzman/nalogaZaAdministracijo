@@ -1,8 +1,13 @@
+# Importing libraries
 import cv2
 import numpy as np
 
 
+# Image processing functions
+
+# Roberts Cross filter
 def my_roberts(slika):
+    # Get image dimensions
     height, width = slika.shape[:2]
 
     # Create an empty grayscale image
@@ -22,11 +27,15 @@ def my_roberts(slika):
             # Compute the magnitude of the gradient
             magnitude = np.sqrt(Gx ** 2 + Gy ** 2)
 
+            # Clip the magnitude to a range of 0 to 255
             slika_robov[y, x] = np.clip(magnitude, 0, 255).astype('uint8')
+
     return slika_robov
 
 
+# Prewitt filter
 def my_prewitt(slika):
+    # Get image dimensions
     height, width = slika.shape[:2]
 
     # Create an empty grayscale image
@@ -46,12 +55,15 @@ def my_prewitt(slika):
             # Compute the magnitude of the gradient
             magnitude = np.sqrt(Gx ** 2 + Gy ** 2)
 
+            # Clip the magnitude to a range of 0 to 255
             slika_prewitt[y, x] = np.clip(magnitude, 0, 255).astype('uint8')
+
     return slika_prewitt
 
 
-
+# Sobel filter
 def my_sobel(slika):
+    # Get image dimensions
     height, width = slika.shape[:2]
 
     # Create an empty grayscale image
@@ -71,11 +83,10 @@ def my_sobel(slika):
             # Compute the magnitude of the gradient
             magnitude = np.sqrt(Gx ** 2 + Gy ** 2)
 
+            # Clip the magnitude to a range of 0 to 255
             slika_sobel[y, x] = np.clip(magnitude, 0, 255).astype('uint8')
 
-
     return slika_sobel
-
 
 
 def my_canny(slika, sp_prag, zg_prag):
